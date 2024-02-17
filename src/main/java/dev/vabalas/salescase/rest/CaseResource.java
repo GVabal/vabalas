@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Path("/cases")
+@Path("cases")
 @Consumes({MediaType.APPLICATION_JSON})
 @Produces({MediaType.APPLICATION_JSON})
 public class CaseResource {
@@ -36,7 +36,7 @@ public class CaseResource {
     }
 
     @GET
-    @Path("/{caseId}")
+    @Path("{caseId}")
     public Object getOne(@PathParam("caseId") String caseId) {
         if (!FAKE_DB.containsKey(caseId)) {
             return new RestExceptionResponse(404, "No case with id " + caseId);
@@ -46,6 +46,15 @@ public class CaseResource {
 
     @POST
     public Map<String, Object> create(CreateCaseRequest request) {
+        var caseId = "1000006";
+        FAKE_DB.put(caseId, new CaseSummary(caseId, CaseStatus.INITIALIZED));
+
+        return Map.of("caseId", caseId);
+    }
+
+    @POST
+    @Path("2")
+    public Map<String, Object> create2(CreateCaseRequest request) {
         var caseId = "1000006";
         FAKE_DB.put(caseId, new CaseSummary(caseId, CaseStatus.INITIALIZED));
 
