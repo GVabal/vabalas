@@ -60,4 +60,14 @@ public class CaseResource {
 
         return Map.of("caseId", caseId);
     }
+
+
+    @POST
+    @Path("3")
+    public Map<String, Object> create3(CreateCaseRequest request) {
+        var caseId = "1000006";
+        FAKE_DB.put(caseId, new CaseSummary(caseId, CaseStatus.INITIALIZED));
+
+        return Map.of("caseId", caseId);
+    }
 }
