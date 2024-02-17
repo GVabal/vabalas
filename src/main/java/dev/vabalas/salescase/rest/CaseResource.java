@@ -34,7 +34,7 @@ public class CaseResource {
 
     @GET
     @Path("/{caseId}")
-    public CaseSummary getOne(@PathParam("caseId") String caseId) {
+    public Object getOne(@PathParam("caseId") String caseId) {
         if (!FAKE_DB.containsKey(caseId)) {
             return new RestExceptionResponse(404, "No case with id " + caseId);
         }
