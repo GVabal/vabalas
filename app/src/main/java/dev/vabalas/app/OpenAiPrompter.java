@@ -1,8 +1,6 @@
-package dev.vabalas.backend;
+package dev.vabalas.app;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +15,6 @@ public class OpenAiPrompter {
         this.chatClient = builder.build();
     }
 
-//    @EventListener(ApplicationStartedEvent.class)
     public void sampleCall() {
         System.out.println("Calling OpenAI API...");
 

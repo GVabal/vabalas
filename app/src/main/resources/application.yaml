@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: backend
+    name: app
   docker:
     compose:
       enabled: false
