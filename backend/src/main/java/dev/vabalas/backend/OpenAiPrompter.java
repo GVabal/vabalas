@@ -17,7 +17,7 @@ public class OpenAiPrompter {
         this.chatClient = builder.build();
     }
 
-    @EventListener(ApplicationStartedEvent.class)
+//    @EventListener(ApplicationStartedEvent.class)
     public void sampleCall() {
         System.out.println("Calling OpenAI API...");
 
