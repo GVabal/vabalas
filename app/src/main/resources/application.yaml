@@ -20,3 +20,4 @@ spring:
 gg:
   jte:
     usePrecompiledTemplates: true
+
