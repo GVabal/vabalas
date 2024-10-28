@@ -5,9 +5,9 @@ services:
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
       - "--entryPoints.websecure.address=:443"
-      - "--certificatesresolvers.app.acme.tlschallenge=true"
-      - "--certificatesresolvers.app.acme.email=vabalas@vabalas.my.id"
-      - "--certificatesresolvers.app.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=vabalas@vabalas.my.id"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
@@ -22,10 +22,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`vabalas.my.id`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.entrypoints=web,websecure"
       - "traefik.http.routers.app.tls.certresolver=myresolver"
+      - "traefik.port=80"
+      - "traefik.http.routers.site.tls=true"
     environment:
       PORT: "80"
+    expose:
+      - 80
     deploy:
       mode: replicated
       replicas: 1
