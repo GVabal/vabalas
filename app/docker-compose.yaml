@@ -25,14 +25,14 @@ services:
       - "traefik.http.routers.site.tls=true"
       - "traefik.http.routers.app.tls.certresolver=myresolver"
       - "traefik.http.routers.app.rule=Host(`vabalas.my.id`)"
-      - "traefik.http.routers.app.entrypoints=web,websecure"
+      - "traefik.http.routers.app.entrypoints=websecure"
     environment:
       PORT: "80"
     expose:
       - 80
     deploy:
       mode: replicated
-      replicas: 2
+      replicas: 1
     restart: always
     healthcheck:
       test: "curl --fail --silent 127.0.0.1/actuator/health | grep UP || exit 1"
