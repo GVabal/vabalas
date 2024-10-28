@@ -5,4 +5,5 @@ spring:
 
 gg:
   jte:
+    usePrecompiledTemplates: false
     development-mode: true

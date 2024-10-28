@@ -16,3 +16,7 @@ spring:
       chat:
         options:
           model: gpt-4o-mini
+
+gg:
+  jte:
+    usePrecompiledTemplates: true
