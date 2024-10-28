@@ -4,9 +4,6 @@ server:
 spring:
   application:
     name: app
-  docker:
-    compose:
-      enabled: false
   threads:
     virtual:
       enabled: true
@@ -20,4 +17,3 @@ spring:
 gg:
   jte:
     usePrecompiledTemplates: true
-

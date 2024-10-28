@@ -1,4 +1,4 @@
-package dev.vabalas.app;
+package dev.vabalas.app.ai;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.core.ParameterizedTypeReference;
