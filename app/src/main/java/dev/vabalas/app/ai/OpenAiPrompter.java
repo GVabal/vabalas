@@ -1,10 +1,7 @@
 package dev.vabalas.app.ai;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class OpenAiPrompter {
@@ -12,18 +9,38 @@ public class OpenAiPrompter {
     private final ChatClient chatClient;
 
     public OpenAiPrompter(ChatClient.Builder builder) {
-        this.chatClient = builder.build();
+        this.chatClient = builder.defaultSystem("short answer").build();
     }
 
-    public void sampleCall() {
-        System.out.println("Calling OpenAI API...");
-
-        var result = chatClient.prompt()
-                .system("short answer")
-                .user("10 car brands")
+    public void recommendCarToLoan(int budget, int loanPeriodYears, double interestRate) {
+        System.out.println("recommending a car:");
+        var carRecommendation = chatClient.prompt()
+                .user("I have a budget of %d. Recommend me nice car to loan".formatted(budget))
                 .call()
-                .entity(new ParameterizedTypeReference<List<String>>() {});
+                .entity(CarDetails.class);
+        System.out.println(carRecommendation);
 
-        System.out.println("Result: " + result);
+        System.out.println("Estimating monthly payment:");
+        var loanDetails = chatClient.prompt()
+                .user("""
+                        I am taking a loan for a car which costs %s.
+                        The loan is for %d years with %f percent interest rate.
+                        What would be my monthly payment?
+                        """.formatted(carRecommendation.price(), loanPeriodYears, interestRate))
+                .call()
+                .entity(LoanDetails.class);
+        System.out.println(loanDetails);
+
+        System.out.println("Generating agreement:");
+        var loanAgreementHTML = chatClient.prompt()
+                .user("""
+                        Generate car loan agreement document in html format.
+                        It should include these car details: %s.
+                        It should include these loan details: %s.
+                        Also generate table with values for each monthly payment, how much of the car value is left to pay, how much of the interest is left to pay.
+                        """.formatted(carRecommendation, loanDetails))
+                .call()
+                .content();
+        System.out.println(loanAgreementHTML);
     }
 }

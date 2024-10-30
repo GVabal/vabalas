@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Loan Agreement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Car Loan Agreement</h1>
+
+<h2>Car Details</h2>
+<ul>
+    <li><strong>Brand:</strong> Toyota</li>
+    <li><strong>Model:</strong> Camry</li>
+    <li><strong>Year:</strong> 2023</li>
+    <li><strong>Price:</strong> $30,000</li>
+    <li><strong>Residual Value After 10 Years:</strong> $12,000</li>
+</ul>
+
+<h2>Loan Details</h2>
+<ul>
+    <li><strong>Monthly Payment:</strong> $550.29</li>
+    <li><strong>Interest Rate:</strong> 3.70%</li>
+    <li><strong>Duration:</strong> 5 years</li>
+</ul>
+
+<h2>Payment Schedule</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Month</th>
+        <th>Remaining Balance</th>
+        <th>Interest Paid</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Example data for 60 months -->
+    <!-- You can replace this with actual calculations -->
+    <script>
+        const monthlyPayment = 550.29;
+        const totalMonths = 60;
+        let principal = 30000;
+        const interestRate = 0.037 / 12; // Monthly interest rate
+        let interestPaid = 0;
+
+        for (let month = 1; month <= totalMonths; month++) {
+            const interestForMonth = principal * interestRate;
+            interestPaid += interestForMonth;
+            principal = principal - (monthlyPayment - interestForMonth);
+
+            document.write(`<tr>
+                    <td>${month}</td>
+                    <td>$${principal.toFixed(2)}</td>
+                    <td>$${interestPaid.toFixed(2)}</td>
+                </tr>`);
+        }
+    </script>
+    </tbody>
+</table>
+
+</body>
+</html>
