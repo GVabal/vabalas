@@ -7,6 +7,9 @@ services:
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=vabalas@vabalas.my.id"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.myresolvertwo.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolvertwo.acme.email=vabalas@vabalas.my.id"
+      - "--certificatesresolvers.myresolvertwo.acme.storage=/letsencrypt/acme2.json"
       - "--entrypoints.web.address=:80"
       - "--entryPoints.app.address=:90"
       - "--entryPoints.websecure.address=:443"
@@ -44,7 +47,7 @@ services:
       - "traefik.enable=true"
       - "traefik.port=90"
       - "traefik.http.routers.site.tls=true"
-      - "traefik.http.routers.app.tls.certresolver=myresolver"
+      - "traefik.http.routers.app.tls.certresolver=myresolvertwo"
       - "traefik.http.routers.app.rule=Host(`vabalas.my.id`) && Path(`/api`)"
     environment:
       PORT: "90"
