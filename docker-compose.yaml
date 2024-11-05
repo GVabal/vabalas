@@ -27,9 +27,9 @@ services:
       - "traefik.enable=true"
       - "traefik.port=80"
       - "traefik.http.routers.site.tls=true"
-      - "traefik.http.routers.app.tls.certresolver=myresolver"
-      - "traefik.http.routers.app.rule=Host(`vabalas.my.id`)"
-      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
+      - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
     environment:
       PORT: "80"
     expose:
