@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost/", maxAge = 3600)
+@CrossOrigin(origins = "https://vabalas.my.id/", maxAge = 3600)
 public class TestEndpoint {
 
     @GetMapping("test")

@@ -1,3 +1,5 @@
+name: vabalas
+
 services:
   reverse-proxy:
     image: traefik:v3.1
@@ -17,6 +19,9 @@ services:
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - private
+      - public
   web:
     image: web:prod
     labels:
@@ -34,6 +39,9 @@ services:
       mode: replicated
       replicas: 1
     restart: always
+    networks:
+      - private
+      - public
   app:
     image: app:prod
     environment:
@@ -50,5 +58,11 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+    networks:
+      - private
 volumes:
   letsencrypt:
+networks:
+  public:
+  private:
+    internal: true
