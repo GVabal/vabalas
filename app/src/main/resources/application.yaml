@@ -7,13 +7,3 @@ spring:
   threads:
     virtual:
       enabled: true
-  ai:
-    openai:
-      api-key: ${OPENAI_API_KEY:change-me}
-      chat:
-        options:
-          model: gpt-4o-mini
-
-gg:
-  jte:
-    usePrecompiledTemplates: true
