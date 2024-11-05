@@ -48,7 +48,7 @@ services:
       - "traefik.port=90"
       - "traefik.http.routers.site.tls=true"
       - "traefik.http.routers.app.tls.certresolver=myresolvertwo"
-      - "traefik.http.routers.app.rule=Host(`vabalas.my.id`) && Path(`/api`)"
+      - "traefik.http.routers.app.rule=Host(`vabalas.my.id`) && PathPrefix(`/api`)"
     environment:
       PORT: "90"
     expose:
