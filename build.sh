@@ -6,15 +6,15 @@ echo "▐▛▀▚▖▐▌ ▐▌  █  ▐▌   ▐▌  █"
 echo "▐▙▄▞▘▝▚▄▞▘▗▄█▄▖▐▙▄▄▖▐▙▄▄▀"
 echo "                         "
 
-echo "APP"
-cd app
+echo "APP" && \
+cd app && \
 mvn clean package && \
 docker build -t app:prod . && \
-cd ..
+cd .. && \
 
-echo "WEB"
-cd web
-# todo
-cd ..
+echo "WEB" && \
+cd web && \
+docker build -t web:prod . && \
+cd .. && \
 
 echo "Done!"

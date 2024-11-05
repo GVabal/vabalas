@@ -17,8 +17,8 @@ services:
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
-  app:
-    image: app:prod
+  web:
+    image: web:prod
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
@@ -30,6 +30,16 @@ services:
       PORT: "80"
     expose:
       - 80
+    deploy:
+      mode: replicated
+      replicas: 1
+    restart: always
+  app:
+    image: app:prod
+    environment:
+      PORT: "8080"
+    expose:
+      - 8080
     deploy:
       mode: replicated
       replicas: 1
