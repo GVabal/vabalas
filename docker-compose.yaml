@@ -30,9 +30,6 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
       - "traefik.http.routers.web.entrypoints=websecure"
-      - "traefik.http.routers.web.timeout.read=10s"
-      - "traefik.http.routers.web.timeout.write=10s"
-      - "traefik.http.routers.web.timeout.idle=30s"
       - "traefik.http.middlewares.redirect-to-index.errors.status=404"
       - "traefik.http.middlewares.redirect-to-index.errors.query=./index.html"
     environment:
@@ -52,9 +49,6 @@ services:
       - "traefik.http.routers.app.tls.certresolver=myresolver"
       - "traefik.http.routers.app.rule=Host(`api.vabalas.my.id`)"
       - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.timeout.read=10s"
-      - "traefik.http.routers.app.timeout.write=10s"
-      - "traefik.http.routers.app.timeout.idle=30s"
     environment:
       PORT: "90"
     expose:
