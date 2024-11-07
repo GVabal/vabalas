@@ -28,6 +28,11 @@ services:
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.middlewares.redirect-to-index.errors.status=404"
       - "traefik.http.middlewares.redirect-to-index.errors.query=./index.html"
+      - "traefik.http.routers.web.middlewares=cors"
+      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       PORT: "80"
     expose:

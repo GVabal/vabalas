@@ -22,7 +22,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpClient.get<IYeet>('api.vabalas.my.id/test')
-      .subscribe(response => console.log(response.yeet));
+    console.log("website")
+    this.httpClient.get<IYeet>('https://api.vabalas.my.id/test')
+      .subscribe(response => console.log("website", response.yeet));
+
+    console.log("local")
+    this.httpClient.get<IYeet>('http://127.0.0.1:90/test')
+      .subscribe(response => console.log("local", response.yeet));
   }
 }
