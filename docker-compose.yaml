@@ -22,7 +22,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
-      - "traefik.http.routers.site.tls=true"
+      - "traefik.http.routers.web.tls=true"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
       - "traefik.http.routers.web.entrypoints=websecure"
@@ -39,10 +39,10 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
-      - "traefik.http.routers.site.tls=true"
-      - "traefik.http.routers.web.tls.certresolver=myresolver"
-      - "traefik.http.routers.web.rule=Host(`vabalas.my.id`) && PathPrefix(`/api`)"
-      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.app.tls=true"
+      - "traefik.http.routers.app.tls.certresolver=myresolver"
+      - "traefik.http.routers.app.rule=Host(`vabalas.my.id`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.app.entrypoints=websecure"
     environment:
       PORT: "90"
     expose:
