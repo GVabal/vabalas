@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {response} from 'express';
 import {HttpClient} from '@angular/common/http';
@@ -14,11 +14,15 @@ interface IYeet {
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'web';
 
-  constructor(httpClient: HttpClient) {
-    httpClient.get<IYeet>('http://api.vabalas.my.id:90/test')
+  constructor(private httpClient: HttpClient) {
+  }
+
+  ngOnInit(): void {
+    this.httpClient.get<IYeet>('https://api.vabalas.my.id/test')
       .subscribe(response => console.log(response.yeet));
   }
 }
