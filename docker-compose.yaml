@@ -33,7 +33,6 @@ services:
       - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
       - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
-      - "traefik.http.middlewares.cors.headers.vabalaswashere=yes"
     environment:
       PORT: "80"
     expose:
@@ -56,7 +55,6 @@ services:
       - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
       - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
-      - "traefik.http.middlewares.cors.headers.vabalaswashere=yes"
     environment:
       PORT: "90"
     expose:
