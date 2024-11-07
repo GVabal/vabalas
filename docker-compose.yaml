@@ -8,9 +8,12 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=vabalas@vabalas.my.id"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.app.address=:80"
       - "--entryPoints.websecure.address=:443"
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.app.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.app.http.redirections.entrypoint.scheme=https"
     ports:
       - "80:80"
       - "443:443"
@@ -26,6 +29,8 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
       - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.middlewares.redirect-to-index.errors.status=404"
+      - "traefik.http.middlewares.redirect-to-index.errors.query=./index.html"
     environment:
       PORT: "80"
     expose:
