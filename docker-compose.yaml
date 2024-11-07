@@ -11,6 +11,12 @@ services:
       - "--entrypoints.webinsecure.address=:80"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.scheme=https"
+    labels:
+      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
+      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
+      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
+      - "traefik.http.middlewares.cors.headers.vabalaswashere=yes"
     ports:
       - "80:80"
       - "443:443"
@@ -26,13 +32,9 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
       - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.middlewares=cors"
       - "traefik.http.middlewares.redirect-to-index.errors.status=404"
       - "traefik.http.middlewares.redirect-to-index.errors.query=./index.html"
-      - "traefik.http.routers.web.middlewares=cors"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       PORT: "80"
     expose:
@@ -51,10 +53,6 @@ services:
       - "traefik.http.routers.app.rule=Host(`api.vabalas.my.id`)"
       - "traefik.http.routers.app.entrypoints=websecure"
       - "traefik.http.routers.app.middlewares=cors"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       PORT: "90"
     expose:
