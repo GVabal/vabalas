@@ -11,6 +11,8 @@ services:
       - "--entrypoints.webinsecure.address=:80"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.webinsecure.http.redirections.entrypoint.permanent=true"
+      - "--serversTransport.insecureSkipVerify=true"
     ports:
       - "80:80"
       - "443:443"
