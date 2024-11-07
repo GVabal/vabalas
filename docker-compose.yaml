@@ -1,7 +1,6 @@
 services:
   reverse-proxy:
     image: traefik:v3.1
-    network_mode: "host"
     command:
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
@@ -35,11 +34,15 @@ services:
       mode: replicated
       replicas: 1
     restart: always
-    networks:
-      - public
-      - private
   app:
     image: app:prod
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=80"
+      - "traefik.http.routers.site.tls=true"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
+      - "traefik.http.routers.web.rule=Host(`vabalas.my.id`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
     environment:
       PORT: "90"
     expose:
@@ -48,13 +51,5 @@ services:
       mode: replicated
       replicas: 1
     restart: always
-    networks:
-      - private
-
 volumes:
   letsencrypt:
-
-networks:
-  public:
-  private:
-    internal: true

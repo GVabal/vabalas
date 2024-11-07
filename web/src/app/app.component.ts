@@ -18,7 +18,7 @@ export class AppComponent {
   title = 'web';
 
   constructor(httpClient: HttpClient) {
-    httpClient.get<IYeet>('http://127.0.0.1:90/api/test')
+    httpClient.get<IYeet>('https://api.vabalas.my.id/test')
       .subscribe(response => this.title = response.yeet);
   }
 }
