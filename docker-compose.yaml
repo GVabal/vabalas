@@ -45,6 +45,7 @@ services:
       - "traefik.http.routers.app.tls.certresolver=myresolver"
       - "traefik.http.routers.app.rule=Host(`api.vabalas.my.id`)"
       - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.middlewares=cors"
       - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
       - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=https://vabalas.my.id"
       - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
