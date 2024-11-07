@@ -26,13 +26,6 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
       - "traefik.http.routers.web.entrypoints=websecure"
-      - "traefik.http.routers.web.middlewares=redirect-to-index,cors"
-      - "traefik.http.middlewares.redirect-to-index.errors.status=404"
-      - "traefik.http.middlewares.redirect-to-index.errors.query=./index.html"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       PORT: "80"
     expose:
@@ -50,11 +43,6 @@ services:
       - "traefik.http.routers.app.tls.certresolver=myresolver"
       - "traefik.http.routers.app.rule=Host(`api.vabalas.my.id`)"
       - "traefik.http.routers.app.entrypoints=websecure"
-      - "traefik.http.routers.app.middlewares=cors"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       PORT: "90"
     expose:
