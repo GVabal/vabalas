@@ -67,11 +67,11 @@
           "configurations": {
             "production": {
               "buildTarget": "web:build:production",
-              "proxyConfig": "proxy-prod.conf.json"
+              "proxyConfig": "src/proxy-prod.conf.json"
             },
             "development": {
               "buildTarget": "web:build:development",
-              "proxyConfig": "proxy-local.conf.json"
+              "proxyConfig": "src/proxy-local.conf.json"
             }
           },
           "defaultConfiguration": "development"
