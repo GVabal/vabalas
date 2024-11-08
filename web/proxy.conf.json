@@ -1,0 +1,8 @@
+{
+  "/api": {
+    "target": "http://api.vabalas.my.id",
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug"
+  }
+}
