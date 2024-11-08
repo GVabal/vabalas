@@ -12,3 +12,4 @@ USER websiteserviceaccount
 WORKDIR /usr/app
 COPY --from=build /app/src/dist/web/ ./
 CMD node server/server.mjs
+EXPOSE 4000
