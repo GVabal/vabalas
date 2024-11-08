@@ -29,27 +29,20 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": {
-              "discoverRoutes": false
-            },
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "20MB",
-                  "maximumError": "25MB"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kB",
-                  "maximumError": "40kB"
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
                 }
               ],
               "outputHashing": "all"
@@ -66,12 +59,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "web:build:production",
-              "proxyConfig": "src/proxy-prod.conf.json"
+              "buildTarget": "web:build:production"
             },
             "development": {
-              "buildTarget": "web:build:development",
-              "proxyConfig": "src/proxy-local.conf.json"
+              "buildTarget": "web:build:development"
             }
           },
           "defaultConfiguration": "development"
