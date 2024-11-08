@@ -6,10 +6,9 @@ RUN npm i
 COPY . ./
 RUN npm run build
 
-FROM node:20.18.0-alpine3.20
+FROM nginx:alpine3.17-slim
 RUN addgroup -S websiteusergroup && adduser -S websiteserviceaccount -G websiteusergroup
 USER websiteserviceaccount
-WORKDIR /usr/app
-COPY --from=build /app/src/dist/web/ ./
-CMD node server/server.mjs
-EXPOSE 4000
+WORKDIR /usr/share/nginx/html
+COPY --from=build /app/src/dist/web ./
+EXPOSE 80
