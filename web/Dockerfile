@@ -7,6 +7,5 @@ COPY . ./
 RUN npm run build
 
 FROM nginx:latest
-WORKDIR /usr/share/nginx/html
-COPY --from=build /app/src/dist/web ./
+COPY --from=build app/dist/web /usr/share/nginx/html
 EXPOSE 80
