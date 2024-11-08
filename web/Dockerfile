@@ -1,9 +1,9 @@
 FROM node:20.18.0-alpine3.20 as build
-WORKDIR /app
+WORKDIR /app/src
 COPY package.json ./
 RUN npm config set package-lock false
 RUN npm i
-COPY . .
+COPY . ./
 RUN npm run build
 
 FROM node:20.18.0-alpine3.20
