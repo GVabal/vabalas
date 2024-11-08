@@ -1,9 +1,6 @@
-# IntelliJ
-.idea
-*.ipr
-*.iml
-*.iws
+target/
 
-# Visual Studio Code
-.vscode
-.factorypath
+.idea
+*.iws
+*.iml
+*.ipr
