@@ -6,7 +6,7 @@ RUN npm i
 COPY . ./
 RUN npm run build
 
-FROM nginx:alpine3.17-slim
+FROM nginx:latest
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/src/dist/web ./
 EXPOSE 80
