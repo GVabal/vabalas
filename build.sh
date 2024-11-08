@@ -9,12 +9,7 @@ echo "                         "
 echo "APP" && \
 cd app && \
 mvn clean package && \
-docker build -t app:prod . && \
-cd .. && \
-
-echo "WEB" && \
-cd web && \
-docker build -t web:prod . && \
+docker build -t website:prod . && \
 cd .. && \
 
 echo "Done!"

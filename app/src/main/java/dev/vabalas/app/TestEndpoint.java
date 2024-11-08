@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestEndpoint {
 
     @GetMapping("test")
-    public String test() {
-        return """
-                {"yeet": "yeet"}
-                """;
+    public Yeet test() {
+        return new Yeet("yeet");
+    }
+
+    public record Yeet(String yeet) {
     }
 }
