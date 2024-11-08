@@ -19,6 +19,17 @@ services:
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: replicated
+      replicas: 1
+#      resources: # play with this https://hpanel.hostinger.com/server/628847/overview
+#        limits:
+#          cpus:
+#          memory:
+#        reservations:
+#          cpus:
+#          memory:
+    restart: always
   web:
     image: web:prod
     labels:
