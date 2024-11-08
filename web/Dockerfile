@@ -7,8 +7,6 @@ COPY . ./
 RUN npm run build
 
 FROM nginx:alpine3.17-slim
-RUN addgroup -S websiteusergroup && adduser -S websiteserviceaccount -G websiteusergroup
-USER websiteserviceaccount
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/src/dist/web ./
 EXPOSE 80
