@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {response} from 'express';
 import {HttpClient} from '@angular/common/http';
 
 interface IYeet {
@@ -22,8 +21,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("website")
-    this.httpClient.get<IYeet>('/api/test')
-      .subscribe(response => console.log("website", response.yeet));
+      if (Date.now() % 2 == 0) {
+          console.log("website")
+          this.httpClient.get<IYeet>('/api/test')
+              .subscribe(response => console.log("website", response.yeet));
+      } else {
+          console.log('no http call this time')
+      }
   }
 }
