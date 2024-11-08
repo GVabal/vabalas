@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://api.vabalas.my.id",
+    "secure": false
+  }
+}
