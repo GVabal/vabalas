@@ -39,6 +39,8 @@ services:
       - "traefik.http.routers.web.tls.certresolver=myresolver"
       - "traefik.http.routers.web.rule=Host(`vabalas.my.id`)"
       - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.middlewares.redirect-to-index.errors.status=404"
+      - "traefik.http.middlewares.redirect-to-index.errors.query=./index.html"
     environment:
       PORT: "80"
     expose:
