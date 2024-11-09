@@ -51,6 +51,7 @@ services:
       - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
+      SPRING_PROFILES_ACTIVE: "prod"
       PORT: "8080"
     expose:
       - 8080
