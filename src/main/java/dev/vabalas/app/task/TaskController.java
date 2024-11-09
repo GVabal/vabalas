@@ -36,6 +36,7 @@ public class TaskController {
         var newTask = Task.createNew(description);
         taskRepository.add(newTask);
 
+        log.info("{} has been added", newTask.id());
         model.addAttribute("task", newTask);
 
         return "tasks/task-row";
@@ -46,7 +47,7 @@ public class TaskController {
     public void deleteTask(@PathVariable String id) {
         boolean removed = taskRepository.remove(id);
         if (removed) {
-            log.info("%s has been deleted", id);
+            log.info("{} has been deleted", id);
         }
     }
 }
