@@ -15,7 +15,10 @@
 </head>
 <body style="background-color: darkslateblue">
 <div style="border: 1px solid darkred">
-    <form hx-post="tasks/add" hx-target="#taskListBody" hx-swap="beforeend" hx-on::after-request="this.reset()">
+    <form hx-post="tasks"
+          hx-target="#taskListBody"
+          hx-swap="beforeend"
+          hx-on::after-request="this.reset()">
         <input id="newTaskDescriptionInput" type="text" placeholder="Enter new task" name="description">
         <button type="submit">Add</button>
     </form>
