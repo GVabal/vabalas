@@ -7,8 +7,8 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: 0.4
-          memory: 3072m
+          cpus: 1
+          memory: 7680m
     command:
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
@@ -36,8 +36,8 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: 0.4
-          memory: 3072m
+          cpus: 1
+          memory: 7680m
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
