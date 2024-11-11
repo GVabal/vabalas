@@ -13,11 +13,10 @@
     <groupId>dev.vabalas</groupId>
     <artifactId>app</artifactId>
     <version>0.1</version>
-    <name>website</name>
+    <name>app</name>
 
     <properties>
         <java.version>21</java.version>
-        <jte.version>3.1.12</jte.version>
     </properties>
 
     <dependencies>
@@ -27,18 +26,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>gg.jte</groupId>
-            <artifactId>jte</artifactId>
-            <version>${jte.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>gg.jte</groupId>
-            <artifactId>jte-spring-boot-starter-3</artifactId>
-            <version>${jte.version}</version>
         </dependency>
 
         <dependency>
@@ -46,30 +38,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>gg.jte</groupId>
-                <artifactId>jte-maven-plugin</artifactId>
-                <version>${jte.version}</version>
-                <executions>
-                    <execution>
-                        <id>jte-generate</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/jte</sourceDirectory>
-                            <contentType>Html</contentType>
-                            <binaryStaticContent>true</binaryStaticContent>
-                            <targetResourceDirectory>${project.build.outputDirectory}</targetResourceDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
