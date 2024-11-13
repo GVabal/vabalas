@@ -29,7 +29,7 @@ services:
 
   cadvisor:
     restart: always
-    image: gcr.io/cadvisor/cadvisor:latest
+    image: gcr.io/cadvisor/cadvisor-amd64:latest
     volumes:
     - type: bind
       source: /
