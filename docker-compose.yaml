@@ -1,15 +1,12 @@
 services:
   # TODO try https://caddyserver.com/
+  # TODO send app logs to grafana
   reverse-proxy:
     restart: always
     image: traefik:v3.2.0
     deploy:
       mode: replicated
       replicas: 1
-      resources:
-        limits:
-          cpus: '1.8'
-          memory: 7168m
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
@@ -35,10 +32,6 @@ services:
     deploy:
       mode: replicated
       replicas: 1
-      resources:
-        limits:
-          cpus: '1.8'
-          memory: 7168m
     volumes:
     - type: bind
       source: /
@@ -120,17 +113,13 @@ services:
 
   backend:
     depends_on:
-      - reverse-proxy
+      - logstash
     restart: always
     image: backend:latest
     build: ./backend
     deploy:
       mode: replicated
       replicas: 1
-      resources:
-        limits:
-          cpus: '1.8'
-          memory: 7168m
     labels:
       - "traefik.enable=true"
       - "traefik.port=80"
@@ -148,6 +137,10 @@ services:
       PORT: "8000"
     ports:
       - "8000:8000"
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://127.0.0.1:12201"
 
 volumes:
   letsencrypt:
