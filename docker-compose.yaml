@@ -19,7 +19,7 @@ services:
       - "--entrypoints.webinsecure.address=:80"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.scheme=https"
-      - "--entrypoints.webinsecure.http.redirections.entrypoint.permanent=true"
+#      - "--entrypoints.webinsecure.http.redirections.entrypoint.permanent=true"
     ports:
       - "80:80"
       - "443:443"
@@ -53,6 +53,8 @@ services:
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       SPRING_PROFILES_ACTIVE: "prod"
-      PORT: "80"
+      PORT: "8080"
+    expose:
+      - 8080
 volumes:
   letsencrypt:
