@@ -1,4 +1,5 @@
 services:
+  # TODO try https://caddyserver.com/
   reverse-proxy:
     restart: always
     image: traefik:v3.2.0
@@ -70,26 +71,52 @@ services:
       bind:
         propagation: rslave
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
 
-  prometheus:
-    depends_on:
-      - cadvisor
+  elasticsearch:
     restart: always
-    image: prom/prometheus:latest
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
     deploy:
       mode: replicated
       replicas: 1
       resources:
         limits:
-          cpus: '1.8'
-          memory: 7168m
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+          cpus: '1'
+          memory: 1024m
     ports:
-      - "9090:9090"
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  logstash:
+    depends_on:
+      - elasticsearch
+    restart: always
+    image: docker.elastic.co/logstash/logstash:7.17.13
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "12201:12201/udp"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+
+  kibana:
+    depends_on:
+      - logstash
+      - elasticsearch
+    restart: always
+    image: docker.elastic.co/kibana/kibana:7.17.13
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config:ro
+    ports:
+      - "5601:5601"
 
   backend:
     depends_on:
