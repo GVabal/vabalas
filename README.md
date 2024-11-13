@@ -4,6 +4,7 @@ docker image prune -f ; \
 docker network prune -f ; \
 docker volume prune -f '
 
+```
 add new user account:
 adduser vabalas
 usermode -aG sudo vabalas
@@ -30,3 +31,4 @@ sudo ufw allow OpenSSH
 sudo ufw enable
 
 in general, try to have everything you need in docker-compose file, build docker images with Dockerfiles that have build tools as steps instead of installing them to the machine
+```
