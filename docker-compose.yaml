@@ -53,6 +53,6 @@ services:
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       SPRING_PROFILES_ACTIVE: "prod"
-      PORT: "8080"
+      PORT: "80"
 volumes:
   letsencrypt:
