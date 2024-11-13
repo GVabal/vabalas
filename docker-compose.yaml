@@ -7,8 +7,14 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: '1'
+          cpus: '1.8'
           memory: 7168m
+    volumes:
+      - letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "80:80"
+      - "443:443"
     command:
       - "--providers.docker"
       - "--providers.docker.exposedbydefault=false"
@@ -19,18 +25,19 @@ services:
       - "--entrypoints.webinsecure.address=:80"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.webinsecure.http.redirections.entrypoint.scheme=https"
-#      - "--entrypoints.webinsecure.http.redirections.entrypoint.permanent=true"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock
+    #      - "--entrypoints.webinsecure.http.redirections.entrypoint.permanent=true"
 
   cadvisor:
     restart: always
     image: gcr.io/cadvisor/cadvisor:latest
     platform: linux/amd64/v3
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1.8'
+          memory: 7168m
     volumes:
     - type: bind
       source: /
@@ -76,7 +83,7 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: '1'
+          cpus: '1.8'
           memory: 7168m
     labels:
       - "traefik.enable=true"
