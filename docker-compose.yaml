@@ -1,5 +1,3 @@
-version: "3"
-
 services:
   reverse-proxy:
     restart: always
@@ -30,11 +28,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   cadvisor:
+    restart: always
     image: gcr.io/cadvisor/cadvisor:latest
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
     ports:
       - "8080:8080"
 
