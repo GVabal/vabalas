@@ -1,3 +1,5 @@
+version: "3"
+
 services:
   reverse-proxy:
     restart: always
@@ -26,6 +28,16 @@ services:
     volumes:
       - letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+    ports:
+      - "8080:8080"
+
   backend:
     depends_on:
       - reverse-proxy
@@ -53,8 +65,9 @@ services:
       - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
       SPRING_PROFILES_ACTIVE: "prod"
-      PORT: "8080"
-    expose:
-      - 8080
+      PORT: "8000"
+    ports:
+      - "8000:8000"
+
 volumes:
   letsencrypt:
