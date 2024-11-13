@@ -30,11 +30,38 @@ services:
   cadvisor:
     restart: always
     image: gcr.io/cadvisor/cadvisor:latest
+    platform: linux/aarch64
     volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro,rshared
+    - type: bind
+      source: /
+      target: /rootfs
+      read_only: true
+      bind:
+        propagation: rslave
+    - type: bind
+      source: /var/lib/docker/
+      target: /var/lib/docker
+      read_only: true
+      bind:
+        propagation: rslave
+    - type: bind
+      source: /var/run
+      target: /var/run
+      read_only: true
+      bind:
+        propagation: rslave
+    - type: bind
+      source: /sys
+      target: /sys
+      read_only: true
+      bind:
+        propagation: rslave
+    - type: bind
+      source: /dev/disk/
+      target: /dev/disk
+      read_only: true
+      bind:
+        propagation: rslave
     ports:
       - "8080:8080"
 
