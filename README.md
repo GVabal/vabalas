@@ -32,3 +32,6 @@ sudo ufw enable
 
 in general, try to have everything you need in docker-compose file, build docker images with Dockerfiles that have build tools as steps instead of installing them to the machine
 ```
+
+Caddy setup for single page applications:
+https://caddyserver.com/docs/caddyfile/patterns#single-page-apps-spas
