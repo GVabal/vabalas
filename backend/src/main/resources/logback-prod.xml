@@ -1,9 +1,7 @@
 <configuration>
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashAccessUdpSocketAppender">
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashUdpSocketAppender">
         <destination>localhost:5044</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <layout class="net.logstash.logback.layout.LogstashLayout"/>
-        </encoder>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
     </appender>
 
     <root level="INFO">
