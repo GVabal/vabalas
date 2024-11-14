@@ -1,10 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashUdpSocketAppender">
-        <destination>localhost:5044</destination>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-    </appender>
+<appender name="stash" class="net.logstash.logback.appender.LogstashUdpSocketAppender">
+    <host>127.0.0.1</host>
+    <port>5044</port>
+    <layout class="net.logstash.logback.layout.LogstashLayout">
+        <customFields>{"appname":"backend"}</customFields>
+    </layout>
+</appender>
 
-    <root level="INFO">
-        <appender-ref ref="LOGSTASH"/>
-    </root>
+<root level="info">
+    <appender-ref ref="stash" />
+</root>
 </configuration>
