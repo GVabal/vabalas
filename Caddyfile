@@ -1,0 +1,3 @@
+vabalas.my.id {
+  reverse_proxy backend:8000
+}

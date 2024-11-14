@@ -1,29 +1,32 @@
 services:
-  # TODO try https://caddyserver.com/
-  # TODO send app logs to grafana
-  reverse-proxy:
+  backend:
+    depends_on:
+      - kibana
+      - postgres
     restart: always
-    image: traefik:v3.2.0
+    image: backend:latest
+    build: ./backend
     deploy:
       mode: replicated
       replicas: 1
+    ports:
+      - "8000:8000"
+    environment:
+      SPRING_PROFILES_ACTIVE: "prod"
+      PORT: "8000"
+
+  caddy:
+    depends_on:
+      - backend
+    restart: always
+    image: caddy/caddy:latest
     volumes:
-      - letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
     ports:
       - "80:80"
       - "443:443"
-    command:
-      - "--providers.docker"
-      - "--providers.docker.exposedbydefault=false"
-      - "--certificatesresolvers.le.acme.tlschallenge=true"
-      - "--certificatesresolvers.le.acme.email=vabalas@vabalas.my.id"
-      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
-      - "--entryPoints.websecure.address=:443"
-      - "--entrypoints.webinsecure.address=:80"
-      - "--entrypoints.webinsecure.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.webinsecure.http.redirections.entrypoint.scheme=https"
-    #      - "--entrypoints.webinsecure.http.redirections.entrypoint.permanent=true"
 
   cadvisor:
     restart: always
@@ -68,7 +71,7 @@ services:
 
   elasticsearch:
     restart: always
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.16.0
     deploy:
       mode: replicated
       replicas: 1
@@ -78,7 +81,6 @@ services:
           memory: 1024m
     ports:
       - "9200:9200"
-      - "9300:9300"
     environment:
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -87,16 +89,15 @@ services:
     depends_on:
       - elasticsearch
     restart: always
-    image: docker.elastic.co/logstash/logstash:7.17.13
+    image: docker.elastic.co/logstash/logstash:8.16.0
     deploy:
       resources:
         limits:
           memory: 512m
     volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
     ports:
-      - "12201:12201/udp"
+      - "5044:5044"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
 
@@ -105,42 +106,27 @@ services:
       - logstash
       - elasticsearch
     restart: always
-    image: docker.elastic.co/kibana/kibana:7.17.13
+    image: docker.elastic.co/kibana/kibana:8.16.0
     volumes:
       - ./kibana/config/:/usr/share/kibana/config:ro
     ports:
       - "5601:5601"
-
-  backend:
-    depends_on:
-      - logstash
-    restart: always
-    image: backend:latest
-    build: ./backend
-    deploy:
-      mode: replicated
-      replicas: 1
-    labels:
-      - "traefik.enable=true"
-      - "traefik.port=80"
-      - "traefik.http.routers.backend.tls=true"
-      - "traefik.http.routers.backend.tls.certresolver=le"
-      - "traefik.http.routers.backend.rule=Host(`vabalas.my.id`)"
-      - "traefik.http.routers.backend.entrypoints=websecure"
-      - "traefik.http.routers.backend.middlewares=cors"
-      - "traefik.http.middlewares.cors.headers.accesscontrolallowmethods=*"
-      - "traefik.http.middlewares.cors.headers.accesscontrolalloworiginlist=https://vabalas.my.id"
-      - "traefik.http.middlewares.cors.headers.accesscontrolmaxage=100"
-      - "traefik.http.middlewares.cors.headers.addvaryheader=true"
     environment:
-      SPRING_PROFILES_ACTIVE: "prod"
-      PORT: "8000"
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+
+  postgres:
+    restart: always
+    image: postgres:17
+    environment:
+      POSTGRES_DB: pgdb
+      POSTGRES_USER: ${DB_USER:-sa}
+      POSTGRES_PASSWORD: ${DB_PASS:-changeme}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
     ports:
-      - "8000:8000"
-    logging:
-      driver: gelf
-      options:
-        gelf-address: "udp://127.0.0.1:12201"
+      - "5432:5432"
 
 volumes:
-  letsencrypt:
+  caddy_data:
+  caddy_config:
+  pg_data:
