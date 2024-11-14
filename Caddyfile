@@ -1,3 +1,15 @@
 api.vabalas.my.id {
   reverse_proxy backend:8000
 }
+
+vabalas.my.id {
+    reverse_proxy frontend:3000
+
+	encode gzip
+
+	handle {
+		root * /srv
+		try_files {path} /index.html
+		file_server
+	}
+}

@@ -20,6 +20,17 @@ services:
       SPRING_PROFILES_ACTIVE: "prod"
       PORT: "8000"
 
+  frontend:
+    restart: always
+    build: ./frontend
+    deploy:
+      mode: replicated
+      replicas: 1
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+
   caddy:
     depends_on:
       - backend
