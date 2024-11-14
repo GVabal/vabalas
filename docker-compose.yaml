@@ -85,6 +85,7 @@ services:
       - "discovery.type=single-node"
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD:-search}
+      - xpack.license.self_generated.type=basic
 
   logstash:
     depends_on:
@@ -103,7 +104,7 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
       ELASTIC_USER: elastic
-      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-search}
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-changeme}
       ELASTIC_HOSTS: http://elasticsearch:9200
     command: logstash -f /usr/share/logstash/pipeline/logstash.conf
 
@@ -118,7 +119,7 @@ services:
     environment:
       ELASTICSEARCH_HOSTS: http://elasticsearch:9200
       ELASTICSEARCH_USERNAME: kibana_system
-      ELASTICSEARCH_PASSWORD: ${KIBANA_PASSWORD:-banana}
+      ELASTICSEARCH_PASSWORD: ${KIBANA_PASSWORD:-changeme}
 
   postgres:
     restart: always
