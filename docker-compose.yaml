@@ -3,6 +3,9 @@ volumes:
   caddy_config:
   pg_data:
 
+networks:
+  caddy_network:
+
 services:
   backend:
     depends_on:
@@ -15,7 +18,9 @@ services:
       mode: replicated
       replicas: 1
     ports:
-      - "8000:8000"
+      - "127.0.0.1:8000:8000"
+    networks:
+      - caddy_network
     environment:
       SPRING_PROFILES_ACTIVE: "prod"
       PORT: "8000"
@@ -27,7 +32,9 @@ services:
       mode: replicated
       replicas: 1
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
+    networks:
+      - caddy_network
     environment:
       NODE_ENV: production
 
@@ -43,6 +50,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks:
+      - caddy_network
 
   cadvisor:
     restart: always
@@ -83,7 +92,7 @@ services:
       bind:
         propagation: rslave
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
 
   postgres:
     restart: always
@@ -95,4 +104,4 @@ services:
     volumes:
       - pg_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
