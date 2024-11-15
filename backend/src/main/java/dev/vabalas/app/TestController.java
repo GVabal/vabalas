@@ -20,6 +20,16 @@ public class TestController {
         return new Yeet("yeet");
     }
 
+    @GetMapping("api")
+    public Yeet yeetApi() {
+        if (System.currentTimeMillis() % 2 == 0) {
+            log.info("something interesting");
+        } else {
+            log.error("this is concerning");
+        }
+        return new Yeet("yeet api");
+    }
+
     public record Yeet(String yeet) {
     }
 }

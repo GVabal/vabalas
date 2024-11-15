@@ -1,11 +1,15 @@
 {
-  email gvabal@gmail.com
+  email noreply@vabalas.my.id
 }
 
-api.vabalas.my.id {
-  reverse_proxy backend:8000
+92.112.180.195:80 www.vabalas.my.id {
+  redir https://vabalas.my.id{uri}
 }
 
 vabalas.my.id {
   reverse_proxy frontend:3000
+}
+
+api.vabalas.my.id {
+  reverse_proxy backend:8000
 }

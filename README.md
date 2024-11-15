@@ -1,9 +1,3 @@
-alias docker-clean=' \
-docker container prune -f ; \
-docker image prune -f ; \
-docker network prune -f ; \
-docker volume prune -f '
-
 ```
 add new user account:
 adduser vabalas
@@ -32,6 +26,3 @@ sudo ufw enable
 
 in general, try to have everything you need in docker-compose file, build docker images with Dockerfiles that have build tools as steps instead of installing them to the machine
 ```
-
-Caddy setup for single page applications:
-https://caddyserver.com/docs/caddyfile/patterns#single-page-apps-spas
