@@ -2,3 +2,7 @@
 *.iws
 *.iml
 *.ipr
+
+target/
+
+node_modules
