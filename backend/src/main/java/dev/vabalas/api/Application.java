@@ -1,4 +1,4 @@
-package dev.vabalas.app;
+package dev.vabalas.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

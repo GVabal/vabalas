@@ -31,24 +31,27 @@ services:
       - "127.0.0.1:8000:8000"
     networks:
       - caddy_network
+      - postgres_network
     environment:
       SPRING_PROFILES_ACTIVE: "prod"
       PORT: "8000"
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
 
-  frontend:
-    restart: always
-    image: frontend:latest
-    build: ./frontend
-    deploy:
-      mode: replicated
-      replicas: 1
-    ports:
-      - "127.0.0.1:3000:3000"
-    networks:
-      - caddy_network
-    environment:
-      NODE_ENV: production
-      PORT: "3000"
+#  frontend:
+#    restart: always
+#    image: frontend:latest
+#    build: ./frontend
+#    deploy:
+#      mode: replicated
+#      replicas: 1
+#    ports:
+#      - "127.0.0.1:3000:3000"
+#    networks:
+#      - caddy_network
+#    environment:
+#      NODE_ENV: production
+#      PORT: "3000"
 
   caddy:
     depends_on:

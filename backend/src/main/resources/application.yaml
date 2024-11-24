@@ -3,7 +3,15 @@ server:
 
 spring:
   application:
-    name: app
+    name: api
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  flyway:
+    default-schema: backend
+  jpa:
+    hibernate:
+      ddl-auto: none
   main:
     banner-mode: off
   threads:
