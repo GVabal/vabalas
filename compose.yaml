@@ -56,7 +56,7 @@ services:
   caddy:
     depends_on:
       - backend
-      - frontend
+#      - frontend
     restart: unless-stopped
     image: caddy/caddy:latest
     volumes:
