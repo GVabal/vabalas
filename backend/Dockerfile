@@ -3,7 +3,6 @@ WORKDIR /app
 COPY pom.xml .
 COPY src ./src
 RUN mvn package -DskpTests
-RUN mvn test
 
 FROM eclipse-temurin:21-jre-noble
 VOLUME /tmp

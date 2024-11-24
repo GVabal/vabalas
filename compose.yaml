@@ -1,9 +1,16 @@
 volumes:
   caddy_data:
+    driver: local
   caddy_config:
+    driver: local
   pg_data:
+    driver: local
+  logs:
+    driver: local
 
 networks:
+  postgres_network:
+    driver: bridge
   caddy_network:
     driver: bridge
 
@@ -18,6 +25,8 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+    volumes:
+      - ./logs/backend:/logs/backend
     ports:
       - "127.0.0.1:8000:8000"
     networks:
@@ -97,16 +106,18 @@ services:
       bind:
         propagation: rslave
     ports:
-      - "127.0.0.1:8080:8080"
+      - "8080:8080"
 
   postgres:
     restart: always
     image: postgres:17
-    environment:
-      POSTGRES_DB: pgdb
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
     ports:
       - "127.0.0.1:5432:5432"
+    networks:
+      - postgres_network
+    environment:
+      POSTGRES_DB: pgdb
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
