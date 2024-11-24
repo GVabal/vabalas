@@ -5,6 +5,7 @@ volumes:
 
 networks:
   caddy_network:
+    driver: bridge
 
 services:
   backend:
@@ -27,6 +28,7 @@ services:
 
   frontend:
     restart: always
+    image: frontend:latest
     build: ./frontend
     deploy:
       mode: replicated
@@ -37,10 +39,12 @@ services:
       - caddy_network
     environment:
       NODE_ENV: production
+      PORT: "3000"
 
   caddy:
     depends_on:
       - backend
+      - frontend
     restart: unless-stopped
     image: caddy/caddy:latest
     volumes:
@@ -100,8 +104,8 @@ services:
     image: postgres:17
     environment:
       POSTGRES_DB: pgdb
-      POSTGRES_USER: ${DB_USER:-sa}
-      POSTGRES_PASSWORD: ${DB_PASS:-changeme}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
     volumes:
       - pg_data:/var/lib/postgresql/data
     ports:
