@@ -6,14 +6,14 @@
     redir https://vabalas.my.id{uri}
 }
 
-vabalas.my.id {
-    reverse_proxy frontend:3000 {
+finance.vabalas.my.id {
+    reverse_proxy backend:8000 {
         header_down Strict-Transport-Security "max-age=31536000"
     }
 }
 
-api.vabalas.my.id {
-    reverse_proxy backend:8000 {
+mongo.vabalas.my.id {
+    reverse_proxy backend:8081 {
         header_down Strict-Transport-Security "max-age=31536000"
     }
 }

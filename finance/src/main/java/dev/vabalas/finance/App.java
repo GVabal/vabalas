@@ -1,12 +1,13 @@
-package dev.vabalas.api;
+package dev.vabalas.finance;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @SpringBootApplication
-public class Application {
-
+@EnableMongoAuditing
+public class App {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(App.class, args);
     }
 }
