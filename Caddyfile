@@ -12,6 +12,12 @@ finance.vabalas.my.id {
     }
 }
 
+nice-quotes.vabalas.my.id {
+    reverse_proxy nice-quotes:8001 {
+        header_down Strict-Transport-Security "max-age=31536000"
+    }
+}
+
 mongo.vabalas.my.id {
     reverse_proxy mongo-express:8081 {
         header_down Strict-Transport-Security "max-age=31536000"

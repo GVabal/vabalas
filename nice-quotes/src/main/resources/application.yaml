@@ -1,0 +1,15 @@
+server:
+  port: ${PORT}
+
+spring:
+  application:
+    name: nice-quotes
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USER}:${MONGO_PASS}@mongo:27017/nice-quotes?authSource=admin
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

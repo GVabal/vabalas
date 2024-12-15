@@ -40,6 +40,31 @@ services:
       MONGO_USER: ${MONGO_ADMIN_USER}
       MONGO_PASS: ${MONGO_ADMIN_PASS}
 
+  nice-quotes:
+    depends_on:
+      mongo:
+        condition: service_started
+    restart: always
+    image: nice-quotes:latest
+    build:
+      context: .
+      args:
+        APP_PATH: nice-quotes
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - ./logs/nice-quotes:/logs/nice-quotes
+    ports:
+      - "127.0.0.1:8001:8001"
+    networks:
+      - caddy_network
+      - mongo_network
+    environment:
+      PORT: "8001"
+      MONGO_USER: ${MONGO_ADMIN_USER}
+      MONGO_PASS: ${MONGO_ADMIN_PASS}
+
   caddy:
     depends_on:
       - finance
