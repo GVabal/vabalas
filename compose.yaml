@@ -70,17 +70,20 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ADMIN_PASS}
 
   mongo-express:
-    depends_on:
-      mongo:
-        condition: service_started
+    links:
+      - mongo
     restart: always
     image: mongo-express:latest
+    volumes:
+      - mongo_data:/data/db
     networks:
       - mongo_network
     ports:
       - "127.0.0.1:8081:8081"
     environment:
       ME_CONFIG_MONGODB_SERVER: "mongo"
+      ME_CONFIG_MONGODB_PORT: "27017"
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_ADMIN_USER}:${MONGO_ADMIN_PASS}@mongo:27017/
       ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_WEB_USER}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_WEB_PASS}
