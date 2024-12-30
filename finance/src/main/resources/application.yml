@@ -9,6 +9,8 @@ micronaut:
       swagger-ui:
         mapping: /swagger-ui/**
         paths: classpath:META-INF/swagger/views/swagger-ui
+  server:
+    port: ${PORT:8080}
 
 datasources:
   default:
