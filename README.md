@@ -27,4 +27,7 @@ sudo ufw enable
 in general, try to have everything you need in docker-compose file, build docker images with Dockerfiles that have build tools as steps instead of installing them to the machine
 ```
 `eval "$(ssh-agent -s)"`\
-`ssh-add ~/.ssh/gh_gvabal`\
+`ssh-add ~/.ssh/gh_gvabal`
+
+`./gradlew dockerBuildNative`\
+`docker push`

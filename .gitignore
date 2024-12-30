@@ -1,11 +1,18 @@
+Thumbs.db
+.DS_Store
+.gradle
+build/
+target/
+out/
+.micronaut/
 .idea
-*.iws
 *.iml
 *.ipr
-
-target/
-
-node_modules
+*.iws
+.project
+.settings
+.classpath
+.factorypath
 
 logs
 .env
