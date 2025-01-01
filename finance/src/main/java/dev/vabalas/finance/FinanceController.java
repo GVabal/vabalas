@@ -2,11 +2,14 @@ package dev.vabalas.finance;
 
 import io.micronaut.http.annotation.*;
 
-@Controller("/finance")
+@Controller("api")
 public class FinanceController {
 
-    @Get(uri="/", produces="text/plain")
-    public String index() {
-        return "Example Response";
-    }
+    // get list of entries - filters: current month, last 30 days, from-to
+
+    // add entry
+
+    // update entry
+
+    // delete entry
 }

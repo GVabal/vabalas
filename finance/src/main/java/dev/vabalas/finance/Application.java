@@ -7,8 +7,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
         info = @Info(title = "finance", version = "0.1"),
-        servers = @Server(url = "https://finance.vabalas.my.id")
-)
+        servers = @Server(url = "https://finance.vabalas.my.id"))
 public class Application {
 
     public static void main(String[] args) {
