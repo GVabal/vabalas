@@ -1,0 +1,32 @@
+micronaut:
+  application:
+    name: execution
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+  server:
+    port: ${PORT:8080}
+datasources:
+  default:
+    url: jdbc:sqlserver://localhost:1433;databaseName=tempdb
+    username: sa
+    password: ''
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    db-type: mssql
+    dialect: SQL_SERVER
+flyway:
+  datasources:
+    default:
+      enabled: true
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+rabbitmq.uri: amqp://localhost:5672

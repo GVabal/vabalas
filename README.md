@@ -1,3 +1,4 @@
+### Prepare VPC
 ```
 add new user account:
 adduser vabalas
@@ -23,11 +24,9 @@ sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow OpenSSH
 sudo ufw enable
-
-in general, try to have everything you need in docker-compose file, build docker images with Dockerfiles that have build tools as steps instead of installing them to the machine
 ```
-`eval "$(ssh-agent -s)"`\
-`ssh-add ~/.ssh/gh_gvabal`
 
-`./gradlew dockerBuildNative`\
-`docker push`
+`mvn package -Dpackaging=docker` -Dmicronaut.aot.enabled=true \
+`mvn package -Dpackaging=docker-crac` \
+`mvn package -Dpackaging=docker-native` -Dmicronaut.aot.enabled=true -Pgraalvm \
+![img.png](image-run-time-graph.png)

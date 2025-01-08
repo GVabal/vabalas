@@ -3,44 +3,90 @@ volumes:
     driver: local
   caddy_config:
     driver: local
-  postgres_data:
+  sqlserver_int_data:
+    driver: local
+  sqlserver_se_data:
+    driver: local
+  sqlserver_dk_data:
     driver: local
   logs:
     driver: local
 
 networks:
-  postgres_network:
+  sqlserver_int_network:
+    driver: bridge
+  sqlserver_se_network:
+    driver: bridge
+  sqlserver_dk_network:
     driver: bridge
   caddy_network:
     driver: bridge
 
 services:
-  finance:
+  preparation:
     depends_on:
-      postgres:
+      sqlserver_int:
         condition: service_started
     restart: always
-    image: gvabal/finance:latest
+    image: preparation:latest
     deploy:
       mode: replicated
       replicas: 1
     volumes:
-      - ./logs/finance:/logs/finance
+      - ./logs/preparation:/logs/preparation
     ports:
       - "127.0.0.1:8000:8000"
     networks:
       - caddy_network
-      - postgres_network
+      - sqlserver_int_network
     environment:
       PORT: "8000"
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASS: ${POSTGRES_PASS}
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PORT: ${POSTGRES_PORT}
+
+  execution_se:
+    depends_on:
+      sqlserver_se:
+        condition: service_started
+    restart: always
+    image: execution:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - ./logs/execution_se:/logs/execution_se
+    ports:
+      - "127.0.0.1:9000:9000"
+    networks:
+      - caddy_network
+      - sqlserver_se_network
+    environment:
+      PORT: "9000"
+      COUNTRY_CODE: "SE"
+
+  execution_dk:
+    depends_on:
+      sqlserver_dk:
+        condition: service_started
+    restart: always
+    image: execution:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - ./logs/execution_dk:/logs/execution_dk
+    ports:
+      - "127.0.0.1:10000:10000"
+    networks:
+      - caddy_network
+      - sqlserver_se_network
+    environment:
+      PORT: "10000"
+      COUNTRY_CODE: "DK"
 
   caddy:
     depends_on:
-      - finance
+      - preparation
+      - execution_se
+      - execution_dk
     restart: unless-stopped
     image: caddy/caddy:latest
     volumes:
@@ -54,15 +100,3 @@ services:
     networks:
       - caddy_network
 
-  postgres:
-    restart: always
-    image: postgres:17
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "127.0.0.1:5432:5432"
-    networks:
-      - postgres_network
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASS}

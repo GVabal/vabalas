@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: dev.vabalas
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [app-name, assertj, data, data-jpa, flyway, graalvm, http-client, java, java-application, jdbc-hikari, junit, logback, management, maven, maven-enforcer-plugin, micronaut-aot, micronaut-http-validation, netty-server, openapi, rabbitmq, readme, serialization-jackson, shade, sqlserver, static-resources, swagger-ui, testcontainers, validation, yaml, yaml-build]

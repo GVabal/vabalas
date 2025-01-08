@@ -6,8 +6,20 @@
     redir https://vabalas.my.id{uri}
 }
 
-finance.vabalas.my.id {
+preparation.vabalas.my.id {
     reverse_proxy finance:8000 {
+        header_down Strict-Transport-Security "max-age=31536000"
+    }
+}
+
+execution-se.vabalas.my.id {
+    reverse_proxy finance:9000 {
+        header_down Strict-Transport-Security "max-age=31536000"
+    }
+}
+
+execution-dk.vabalas.my.id {
+    reverse_proxy finance:10000 {
         header_down Strict-Transport-Security "max-age=31536000"
     }
 }
